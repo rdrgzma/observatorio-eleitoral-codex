@@ -1,0 +1,4 @@
+election_year,round,office,uf,municipality_code,zone,section,electorate,turnout,valid_votes
+2024,1,PREFEITO,ZZ,00001,0001,0001,100,80,70
+2024,1,PREFEITO,ZZ,00001,0001,0002,200,150,140
+2024,1,PREFEITO,ZZ,00001,0001,0003,0,0,0

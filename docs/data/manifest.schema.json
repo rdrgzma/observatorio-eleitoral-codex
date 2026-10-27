@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Synthetic canonical import manifest v0.1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "source_url",
+    "retrieved_at",
+    "available_at",
+    "availability_evidence",
+    "cutoff",
+    "sha256",
+    "dataset_version",
+    "schema_version",
+    "parser_version",
+    "license",
+    "classification",
+    "data_kind"
+  ],
+  "properties": {
+    "source_url": {
+      "type": "string",
+      "pattern": "^fixture://.+"
+    },
+    "retrieved_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "available_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "availability_evidence": {
+      "type": "string",
+      "minLength": 1
+    },
+    "cutoff": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "dataset_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "schema_version": {
+      "const": "section-totals/0.1.0"
+    },
+    "parser_version": {
+      "const": "canonical-csv/0.1.0"
+    },
+    "license": {
+      "type": "string",
+      "minLength": 1
+    },
+    "classification": {
+      "const": "HYPOTHESIS"
+    },
+    "data_kind": {
+      "const": "SYNTHETIC"
+    }
+  },
+  "$comment": "Temporal relations and file digest require the Go validator; JSON Schema alone does not prove availability."
+}

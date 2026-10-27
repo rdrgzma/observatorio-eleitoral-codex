@@ -16,6 +16,13 @@
 - [ ] Testes de consistência, cobertura e duplicidade.
 **Aceite:** importação reexecutável com qualidade medida.
 
+Incremento preparado: contrato interno v0.1, manifesto versionado, CLI de
+importação exclusivamente sintética e testes de hash, limites temporais,
+duplicidade e invariantes. As referências TSE retornaram HTTP 403; inventário
+verificado, licença, parser oficial, persistência analítica e pareamento
+permanecem pendentes. Esse incremento não encerra MVP-01. Consulte
+[contrato](data/CONTRATO_HISTORICO.md) e [evidências](VALIDACAO_MVP01.md).
+
 ## MVP-02: Laboratório retrospectivo
 - [ ] Baseline de agregação e modelo territorial documentados.
 - [ ] Replays temporais (somente quando houver snapshots) e sintéticos, rotulados.

@@ -1,0 +1,69 @@
+{
+  "inventory_version": "0.1.0",
+  "classification": "METHOD_DOCUMENTED",
+  "status": "BLOCKED_NETWORK",
+  "checked_on": "2026-10-27",
+  "official_data_imported": false,
+  "references": [
+    {
+      "url": "https://dadosabertos.tse.jus.br/",
+      "purpose": "Catalogar datasets e recursos oficiais",
+      "observed_http_status": 403,
+      "dataset_metadata_verified": false
+    },
+    {
+      "url": "https://www.tse.jus.br/eleicoes/arquivos",
+      "purpose": "Conferir layouts e documentação técnica",
+      "observed_http_status": 403,
+      "dataset_metadata_verified": false
+    }
+  ],
+  "planned_targets": [
+    {
+      "year": 2020,
+      "office": "PREFEITO",
+      "rounds": [
+        1,
+        2
+      ]
+    },
+    {
+      "year": 2024,
+      "office": "PREFEITO",
+      "rounds": [
+        1,
+        2
+      ]
+    },
+    {
+      "year": 2020,
+      "office": "VEREADOR",
+      "rounds": [
+        1
+      ]
+    },
+    {
+      "year": 2024,
+      "office": "VEREADOR",
+      "rounds": [
+        1
+      ]
+    }
+  ],
+  "target_status": "HYPOTHESIS: planned scope, not confirmation of dataset coverage",
+  "datasets": [],
+  "pending": [
+    "Dataset IDs, resource URLs and actual territorial/temporal coverage",
+    "Source license and redistribution conditions",
+    "Official dictionary, encoding, delimiters and field semantics",
+    "Hashes, size limits and manifests approved before any substantial download",
+    "Availability evidence needed for temporal replays",
+    "Historical section/location crosswalk and electorate-weighted coverage"
+  ],
+  "network_diagnosis": {
+    "host": "dadosabertos.tse.jus.br",
+    "stage": "HTTPS_PROXY_CONNECT",
+    "status": 403,
+    "official_server_response_received": false
+  }
+}
