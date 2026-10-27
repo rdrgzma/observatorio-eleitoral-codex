@@ -30,3 +30,6 @@ __pycache__/
 .idea/
 .vscode/
 .DS_Store
+
+/painel/.phpunit.cache/
+/painel/.phpunit.result.cache

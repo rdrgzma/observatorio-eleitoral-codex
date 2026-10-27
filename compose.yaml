@@ -1,0 +1,58 @@
+name: observatorio
+services:
+  db:
+    image: postgres:17-bookworm
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-observatorio}
+      POSTGRES_USER: ${POSTGRES_USER:-observatorio}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Copy .env.example to .env for local development}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [CMD-SHELL, 'pg_isready -U "$$POSTGRES_USER" -d "$$POSTGRES_DB"']
+      interval: 3s
+      timeout: 3s
+      retries: 20
+  api:
+    build: ./services/api
+    healthcheck:
+      test: [CMD, api, healthcheck]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+    ports:
+      - "127.0.0.1:${API_PORT:-8080}:8080"
+  painel:
+    build: ./painel
+    environment:
+      APP_ENV: local
+      APP_DEBUG: "false"
+      APP_KEY: ${APP_KEY:?Generate a local APP_KEY as documented}
+      DB_CONNECTION: pgsql
+      DB_HOST: db
+      DB_PORT: "5432"
+      DB_DATABASE: ${POSTGRES_DB:-observatorio}
+      DB_USERNAME: ${POSTGRES_USER:-observatorio}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:?Set local password in .env}
+      SESSION_DRIVER: cookie
+      CACHE_STORE: array
+      LOG_CHANNEL: stderr
+    ports:
+      - "127.0.0.1:${PANEL_PORT:-8000}:8000"
+    healthcheck:
+      test: [CMD, php, -r, "exit(@file_get_contents('http://127.0.0.1:8000/up') === false ? 1 : 0);"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+    depends_on:
+      db:
+        condition: service_healthy
+  engine:
+    image: python:3.12-slim-bookworm
+    working_dir: /app
+    volumes:
+      - ./services/engine:/app:ro
+    command: [python, -m, observatorio_engine]
+    profiles: [tools]
+volumes:
+  postgres_data:
