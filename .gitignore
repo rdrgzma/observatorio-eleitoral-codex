@@ -1,0 +1,32 @@
+# Segredos e ambiente
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.pem
+*.key
+# Dados de eleição e produtos de experimentos
+data/raw/
+data/processed/
+data/snapshots/
+data/derived/
+datasets/raw/
+datasets/processed/
+*.parquet
+*.sqlite
+*.sqlite3
+# Python
+__pycache__/
+.pytest_cache/
+.venv/
+*.py[cod]
+# PHP/JS
+/vendor/
+/node_modules/
+/painel/vendor/
+/painel/node_modules/
+/painel/public/build/
+# IDE
+.idea/
+.vscode/
+.DS_Store
