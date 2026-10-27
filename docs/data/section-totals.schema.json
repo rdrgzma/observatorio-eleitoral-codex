@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Synthetic section totals v0.1 (project contract, not TSE layout)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "classification",
+    "data_kind",
+    "election_year",
+    "round",
+    "office",
+    "uf",
+    "municipality_code",
+    "zone",
+    "section",
+    "electorate",
+    "turnout",
+    "valid_votes"
+  ],
+  "properties": {
+    "classification": {
+      "const": "HYPOTHESIS"
+    },
+    "data_kind": {
+      "const": "SYNTHETIC"
+    },
+    "election_year": {
+      "type": "integer",
+      "minimum": 1900,
+      "maximum": 9999
+    },
+    "round": {
+      "enum": [
+        1,
+        2
+      ]
+    },
+    "office": {
+      "const": "PREFEITO"
+    },
+    "uf": {
+      "type": "string",
+      "pattern": "^[A-Z]{2}$"
+    },
+    "municipality_code": {
+      "type": "string",
+      "pattern": "^[0-9]+$"
+    },
+    "zone": {
+      "type": "string",
+      "pattern": "^[0-9]+$"
+    },
+    "section": {
+      "type": "string",
+      "pattern": "^[0-9]+$"
+    },
+    "electorate": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9223372036854775807
+    },
+    "turnout": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9223372036854775807
+    },
+    "valid_votes": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9223372036854775807
+    }
+  },
+  "$comment": "Go additionally enforces valid_votes <= turnout <= electorate; territorial identifiers are not checked against official registries."
+}

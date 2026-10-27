@@ -1,0 +1,14 @@
+{
+  "source_url": "fixture://canonical-prefeito-v0.1",
+  "retrieved_at": "2026-10-27T19:22:18+00:00",
+  "available_at": "2026-10-27T19:22:18+00:00",
+  "availability_evidence": "Authored synthetic fixture; timestamps refer to fixture creation, not availability of any TSE data.",
+  "cutoff": "2026-10-27T19:22:18+00:00",
+  "sha256": "c8be3b6b08529b327822d98bbd789297139c12b4ebf6c158fc96e18f8fd495d1",
+  "dataset_version": "synthetic-fixture/0.1.0",
+  "schema_version": "section-totals/0.1.0",
+  "parser_version": "canonical-csv/0.1.0",
+  "license": "TEST_FIXTURE_ONLY_NOT_A_TSE_LICENSE",
+  "classification": "HYPOTHESIS",
+  "data_kind": "SYNTHETIC"
+}

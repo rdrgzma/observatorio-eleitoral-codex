@@ -13,7 +13,7 @@ Plataforma **em desenvolvimento** para pesquisa quantitativa, exploração de **
 
 ## Estado atual
 
-**MVP-00 — Fundação técnica e documental.** Não há modelo validado, dados oficiais importados, projeção pública nem ambiente de produção.
+**MVP-01 — primeiro incremento sintético, integração oficial bloqueada.** A fundação MVP-00 foi incorporada pelo PR #2. Não há modelo validado, dados oficiais importados, projeção pública nem ambiente de produção.
 
 ## Arquitetura planejada
 
@@ -92,8 +92,8 @@ no host. Não há painel administrativo público: Filament 5 está instalado par
 trabalho futuro, sem usuários, recursos ou autenticação fictícios.
 
 Estrutura: `services/api/`, `services/engine/`, `painel/`, `scripts/`,
-`docs/adr/`. Não há ingestão de dados nem modelo eleitoral; portanto, testes de
-invariantes eleitorais e cutoff ainda não se aplicam. Consulte as decisões e
+`docs/adr/`. Há importação local exclusivamente sintética no MVP-01, com testes
+de invariantes e cutoff; não há ingestão oficial nem modelo eleitoral. Consulte as decisões e
 limites em [ADR 0001](docs/adr/0001-fundacao-local.md) e os resultados efetivamente
 executados em [Validação MVP-00](docs/VALIDACAO_MVP00.md).
 
@@ -111,3 +111,39 @@ DNS/proxy deve funcionar dentro dos contêineres, além do host.
 
 O servidor PHP embutido e as credenciais de exemplo são exclusivos do ambiente
 local. Não há implantação nem publicação pública ativada por estes comandos.
+
+
+## MVP-01 — Importação local sintética
+
+O [inventário de fontes](docs/data/INVENTARIO_FONTES.md) registra o bloqueio HTTP
+403 do TSE. O [contrato interno](docs/data/CONTRATO_HISTORICO.md) não representa
+um layout oficial. O importador aceita somente CSV local `SYNTHETIC` rotulado
+`HYPOTHESIS`, verifica manifesto e hash e impede normalização de dados inválidos.
+Não baixa arquivos nem realiza pareamento histórico ou imputação.
+
+Exemplo reproduzível com a fixture versionada (três seções inteiramente fictícias):
+
+```sh
+# Execute na raiz; use um novo diretório de saída em cada execução.
+docker run --rm --user "$(id -u):$(id -g)" \
+  -e GOCACHE=/tmp/go-cache -e GOPATH=/tmp/go -e GOTELEMETRY=off \
+  -v "$PWD:/repo" -w /repo/services/api golang:1.26-bookworm sh -c '
+  go build -o /tmp/import-canonical ./cmd/import-canonical &&
+  /tmp/import-canonical \
+    --input testdata/historical/sections.csv \
+    --manifest testdata/historical/manifest.json \
+    --cutoff 2026-10-27T19:22:18Z \
+    --output /repo/data/processed/mvp01-synthetic-1'
+```
+
+Resultado esperado: `SYNTHETIC: rows=3 accepted=3 rejected=0`. O cutoff do
+exemplo é a disponibilidade declarada **da fixture**, não de dados eleitorais de
+2024. As saídas permanecem ignoradas pelo Git. Reexecutar com o mesmo destino
+falha sem sobrescrever artefatos. `quality_passed` não autoriza publicação.
+
+Os testes do novo módulo e do CLI já fazem parte de `./scripts/check.sh` e da CI.
+Veja [ADR 0002](docs/adr/0002-contrato-historico-sintetico.md),
+[evidências do incremento](docs/VALIDACAO_MVP01.md) e o
+[rascunho da issue MVP-01](docs/ISSUE_MVP01.md). O aceite integral do marco
+continua pendente de fontes oficiais, licença, adaptador verificado e
+pareamento auditável com cobertura medida.
