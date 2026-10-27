@@ -1,0 +1,24 @@
+name: foundation
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Create local-only configuration
+        run: python3 scripts/init-env.py
+      - name: Build and exercise actual services
+        run: ./scripts/smoke.sh
+      - name: Lint and tests
+        run: ./scripts/check.sh
+      - name: Diagnostics
+        if: failure()
+        run: docker compose logs --no-color --tail=100
+      - name: Stop services
+        if: always()
+        run: docker compose down

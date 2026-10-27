@@ -1,0 +1,7 @@
+vendor
+.env
+.git
+node_modules
+storage/logs/*
+.phpunit.result.cache
+.phpunit.cache
